@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cipher Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    textarea, input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cipher Tool</h1>
+
+  <form id="cipherForm">
+    <label><strong>Mode:</strong></label><br>
+    <input type="radio" name="mode" value="E" checked> Encrypt
+    <input type="radio" name="mode" value="D"> Decrypt
+
+    <br><br>
+    <label><strong>Choose Cipher:</strong></label><br>
+    <select name="cipher" id="cipher">
+        <option value="affine_cipher">Affine Cipher</option>
+        <option value="atbash_cipher">Atbash Cipher</option>
+        <option value="august_cipher">August Cipher</option>
+        <option value="autokey_cipher">Autokey Cipher</option>
+        <option value="beaufort_cipher">Beaufort Cipher</option>
+        <option value="caesar_cipher">Caesar Cipher</option>
+        <option value="gronsfeld_cipher">Gronsfeld Cipher</option>
+        <option value="hill_cipher">Hill Cipher</option>
+        <option value="myszkowski_cipher">Myszkowski Cipher</option>
+        <option value="ngram_operations">Ngram Operations</option>
+        <option value="rail_fence_cipher">Rail Fence Cipher</option>
+        <option value="route_cipher">Route Cipher</option>
+        <option value="running_key_cipher">Running Key Cipher</option>
+        <option value="vigenere_cipher">Vigenère Cipher</option>
+    </select>
+
+    <br><br>
+    <label><strong>Message:</strong></label>
+    <textarea name="message" placeholder="Enter your message here..." required></textarea>
+
+    <label><strong>Key (if required):</strong></label>
+    <input type="text" name="key" placeholder="Enter key (if needed)">
+
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Output:</h2>
+  <pre id="output">Output will appear here...</pre>
+
+  <script>
+    document.getElementById('cipherForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const form = new FormData(this);
+      const response = await fetch('/run', {
+        method: 'POST',
+        body: form
+      });
+
+      const result = await response.json();
+      document.getElementById('output').innerText = result.output;
+    });
+  </script>
+
+</body>
+</html>
